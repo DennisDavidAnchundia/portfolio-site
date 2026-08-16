@@ -23,3 +23,6 @@ Thumbs.db
 
 # Docker runtime data
 docker/data/
+
+# Local study notes
+docs/
