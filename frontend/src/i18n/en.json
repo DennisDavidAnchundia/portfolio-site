@@ -6,29 +6,60 @@
     "contact": "Contact"
   },
   "hero": {
-    "role": "Full Stack Developer",
+    "role": "Information Technology Engineer",
     "name": "Dennis Anchundia",
-    "description": "I build robust APIs with Java and Spring Boot, and modern frontends with React and TypeScript.",
-    "cta_projects": "View my projects",
-    "cta_contact": "Contact me"
+    "short_bio": "I build robust APIs, scalable systems, and applications that prioritize code quality, performance, and user experience.",
+    "cta_projects": "View projects",
+    "cta_contact": "Contact me",
+    "scroll": "Scroll"
   },
   "about": {
     "title": "About Me",
-    "placeholder": "Section under construction..."
+    "p1": "Information Technology Engineer specialized in backend software architecture and scalable systems. I have designed and built high-availability RESTful APIs for enterprise environments, managing full lifecycle from conception to production deployment.",
+    "p2": "I master the Java / Spring Boot stack for robust services, complemented with Node.js / TypeScript for orchestration layers and DevOps tooling. My experience includes optimizing PostgreSQL queries with millions of records, integrating microservices, and automating CI/CD pipelines with Docker and GitHub Actions.",
+    "p3": "I work under Clean Code principles, hexagonal architecture, and agile Scrum methodologies, always prioritizing maintainability, performance, and test coverage. Every line of code I write is meant to be tested, scaled, and maintained by teams.",
+    "stat1_label": "Years of experience",
+    "stat1_value": "3+",
+    "stat2_label": "Projects completed",
+    "stat2_value": "10+",
+    "stat3_label": "Technologies",
+    "stat3_value": "15+"
   },
   "skills": {
     "title": "Skills",
-    "placeholder": "Section under construction..."
+    "subtitle": "Technologies and tools I use daily",
+    "languages": "Languages",
+    "frameworks": "Frameworks",
+    "databases": "Databases",
+    "devops": "DevOps & Tools"
   },
   "projects": {
     "title": "Projects",
-    "placeholder": "Section under construction..."
+    "subtitle": "A selection of projects that showcase my skills",
+    "view_code": "Code",
+    "view_demo": "Demo",
+    "view_details": "View details",
+    "featured": "Featured",
+    "all_projects": "All projects",
+    "view_all": "View all projects",
+    "tech": "Technologies"
   },
   "contact": {
     "title": "Contact",
-    "placeholder": "Section under construction..."
+    "subtitle": "Have a project in mind? I'd love to hear about it.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending...",
+    "success": "Message sent! I'll get back to you soon.",
+    "error": "Something went wrong. Please try again.",
+    "name_placeholder": "Your name",
+    "email_placeholder": "your@email.com",
+    "message_placeholder": "Tell me about your project..."
   },
   "footer": {
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "built": "Built with React + Spring Boot"
   }
 }

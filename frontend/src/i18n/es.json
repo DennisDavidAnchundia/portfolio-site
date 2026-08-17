@@ -6,29 +6,60 @@
     "contact": "Contacto"
   },
   "hero": {
-    "role": "Full Stack Developer",
+    "role": "Ingeniero en Tecnologías de la Información",
     "name": "Dennis Anchundia",
-    "description": "Construyo APIs robustas con Java y Spring Boot, y frontends modernos con React y TypeScript.",
-    "cta_projects": "Ver mis proyectos",
-    "cta_contact": "Contáctame"
+    "short_bio": "Construyo APIs robustas, sistemas escalables y aplicaciones que priorizan la calidad del código, el rendimiento y la experiencia del usuario.",
+    "cta_projects": "Ver proyectos",
+    "cta_contact": "Contáctame",
+    "scroll": "Scroll"
   },
   "about": {
     "title": "Sobre mí",
-    "placeholder": "Sección en construcción..."
+    "p1": "Ingeniero en Tecnologías de la Información especializado en arquitectura de software backend y sistemas escalables. He diseñado y construido APIs RESTful de alta disponibilidad para entornos empresariales, gestionando flujos completos desde la concepción hasta el despliegue en producción.",
+    "p2": "Domino el stack Java / Spring Boot para servicios robustos, complementado con Node.js / TypeScript para capas de orquestación y herramientas DevOps. Mis experiencias incluyen optimización de consultas PostgreSQL con millones de registros, integración de microservicios y automatización de pipelines CI/CD con Docker y GitHub Actions.",
+    "p3": "Trabajo bajo principios de Clean Code, arquitectura hexagonal y metodologías ágiles Scrum, priorizando siempre la mantenibilidad, el rendimiento y la cobertura de tests. Cada línea de código que escribo está pensada para ser probada, escalada y mantenida por equipos.",
+    "stat1_label": "Años de experiencia",
+    "stat1_value": "3+",
+    "stat2_label": "Proyectos completados",
+    "stat2_value": "10+",
+    "stat3_label": "Tecnologías",
+    "stat3_value": "15+"
   },
   "skills": {
     "title": "Habilidades",
-    "placeholder": "Sección en construcción..."
+    "subtitle": "Tecnologías y herramientas que utilizo día a día",
+    "languages": "Lenguajes",
+    "frameworks": "Frameworks",
+    "databases": "Bases de datos",
+    "devops": "DevOps & Herramientas"
   },
   "projects": {
     "title": "Proyectos",
-    "placeholder": "Sección en construcción..."
+    "subtitle": "Una selección de proyectos que demuestran mis habilidades",
+    "view_code": "Código",
+    "view_demo": "Demo",
+    "view_details": "Ver detalles",
+    "featured": "Destacado",
+    "all_projects": "Todos los proyectos",
+    "view_all": "Ver todos los proyectos",
+    "tech": "Tecnologías"
   },
   "contact": {
     "title": "Contacto",
-    "placeholder": "Sección en construcción..."
+    "subtitle": "¿Tienes un proyecto en mente? Me encantaría escuchar tu idea.",
+    "name": "Nombre",
+    "email": "Email",
+    "message": "Mensaje",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "success": "¡Mensaje enviado! Te responderé pronto.",
+    "error": "Hubo un error. Intenta de nuevo.",
+    "name_placeholder": "Tu nombre",
+    "email_placeholder": "tu@email.com",
+    "message_placeholder": "Cuéntame sobre tu proyecto..."
   },
   "footer": {
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "built": "Construido con React + Spring Boot"
   }
 }

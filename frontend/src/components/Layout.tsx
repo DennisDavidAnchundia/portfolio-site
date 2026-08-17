@@ -1,6 +1,4 @@
 import type { ReactNode } from 'react'
-import Navbar from './Navbar'
-import Footer from './Footer'
 
 interface LayoutProps {
   children: ReactNode
@@ -8,12 +6,8 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <Navbar />
-      <main className="flex-1 pt-16">
-        {children}
-      </main>
-      <Footer />
+    <div className="min-h-screen bg-stone-50 dark:bg-black text-stone-900 dark:text-white antialiased">
+      {children}
     </div>
   )
 }

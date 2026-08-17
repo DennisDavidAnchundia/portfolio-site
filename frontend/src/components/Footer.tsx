@@ -4,18 +4,21 @@ export default function Footer() {
   const { t } = useTranslation()
 
   return (
-    <footer className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            &copy; {new Date().getFullYear()} Dennis Anchundia. {t('footer.rights')}
-          </p>
-          <div className="flex items-center gap-4">
+    <footer className="border-t border-stone-200 dark:border-white/[0.06] bg-white dark:bg-black">
+      <div className="max-w-5xl mx-auto px-6 py-10">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="text-center sm:text-left">
+            <p className="text-sm text-stone-400 dark:text-zinc-500">
+              &copy; {new Date().getFullYear()} Dennis Anchundia. {t('footer.rights')}
+            </p>
+            <p className="text-xs text-stone-300 dark:text-zinc-600 mt-1">{t('footer.built')}</p>
+          </div>
+          <div className="flex items-center gap-3">
             <a
               href="https://github.com/DennisDavidAnchundia"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+              className="p-2.5 text-stone-400 hover:text-stone-900 dark:hover:text-white rounded-lg hover:bg-stone-100 dark:hover:bg-white/[0.05] transition-all duration-200"
               aria-label="GitHub"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -26,7 +29,7 @@ export default function Footer() {
               href="https://linkedin.com/in/dennis-anchundia"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+              className="p-2.5 text-stone-400 hover:text-stone-900 dark:hover:text-white rounded-lg hover:bg-stone-100 dark:hover:bg-white/[0.05] transition-all duration-200"
               aria-label="LinkedIn"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
