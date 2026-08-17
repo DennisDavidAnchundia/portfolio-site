@@ -3,6 +3,7 @@ package com.dennis.portfolio.controller;
 import com.dennis.portfolio.dto.MessageRequest;
 import com.dennis.portfolio.dto.MessageResponse;
 import com.dennis.portfolio.service.MessageService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class MessageController {
     }
 
     @PostMapping("/contact")
-    public ResponseEntity<MessageResponse> create(@RequestBody MessageRequest request) {
+    public ResponseEntity<MessageResponse> create(@Valid @RequestBody MessageRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(messageService.create(request));
     }
 
