@@ -1,0 +1,34 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "role": "Full Stack Developer",
+    "name": "Dennis Anchundia",
+    "description": "I build robust APIs with Java and Spring Boot, and modern frontends with React and TypeScript.",
+    "cta_projects": "View my projects",
+    "cta_contact": "Contact me"
+  },
+  "about": {
+    "title": "About Me",
+    "placeholder": "Section under construction..."
+  },
+  "skills": {
+    "title": "Skills",
+    "placeholder": "Section under construction..."
+  },
+  "projects": {
+    "title": "Projects",
+    "placeholder": "Section under construction..."
+  },
+  "contact": {
+    "title": "Contact",
+    "placeholder": "Section under construction..."
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}
