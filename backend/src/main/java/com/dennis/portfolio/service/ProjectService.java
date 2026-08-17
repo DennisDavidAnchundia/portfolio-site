@@ -2,6 +2,7 @@ package com.dennis.portfolio.service;
 
 import com.dennis.portfolio.dto.ProjectResponse;
 import com.dennis.portfolio.dto.mapper.ProjectMapper;
+import com.dennis.portfolio.exception.ResourceNotFoundException;
 import com.dennis.portfolio.model.Project;
 import com.dennis.portfolio.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class ProjectService {
 
     public ProjectResponse findById(Long id) {
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + id));
         return ProjectMapper.toResponse(project);
     }
 
