@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 
 const categories = [
   {
@@ -23,11 +24,14 @@ const categories = [
 export default function Skills() {
   const { t } = useTranslation()
   const [active, setActive] = useState(0)
+  const { ref, visible } = useScrollReveal(0.15)
 
   return (
     <section id="skills" className="py-28 bg-stone-100 dark:bg-zinc-950">
-      <div className="max-w-5xl mx-auto px-6">
-        {/* Header */}
+      <div
+        ref={ref}
+        className={`max-w-5xl mx-auto px-6 reveal ${visible ? 'visible' : ''}`}
+      >
         <div className="max-w-2xl">
           <p className="text-xs font-semibold text-amber-700 dark:text-cyan-400 tracking-widest uppercase mb-3">Skills</p>
           <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 dark:text-white tracking-tight">{t('skills.title')}</h2>
@@ -52,12 +56,12 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Tags */}
-        <div className="mt-8 flex flex-wrap gap-2.5">
+        {/* Tags with tilt effect */}
+        <div className="mt-8 flex flex-wrap gap-2.5 stagger-children">
           {categories[active].skills.map((skill) => (
             <span
               key={skill}
-              className="px-4 py-2 text-sm font-medium text-stone-700 dark:text-zinc-200 bg-white dark:bg-white/[0.06] border border-stone-200 dark:border-white/[0.08] rounded-lg hover:border-amber-300 dark:hover:border-cyan-400/30 hover:bg-amber-50/50 dark:hover:bg-white/[0.08] transition-all duration-200 cursor-default"
+              className="tilt-card px-4 py-2 text-sm font-medium text-stone-700 dark:text-zinc-200 bg-white dark:bg-white/[0.06] border border-stone-200 dark:border-white/[0.08] rounded-lg hover:border-amber-300 dark:hover:border-cyan-400/30 hover:bg-amber-50/50 dark:hover:bg-white/[0.08] transition-all duration-200 cursor-default"
             >
               {skill}
             </span>

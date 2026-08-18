@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import ProjectModal from '../components/ProjectModal'
 
 const projects = [
@@ -62,7 +63,7 @@ const projects = [
     id: 6,
     title: 'Weather App',
     description: 'Aplicación del clima con pronóstico a 7 días, geolocalización y modo offline con Service Workers.',
-    longDescription: 'App progressive web app que consume API del clima, muestra pronóstico diario por horas, alertas de clima severo, geolocalización automática y funciona sin conexión grâce a Service Workers y cache策略.',
+    longDescription: 'App progressive web app que consume API del clima, muestra pronóstico diario por horas, alertas de clima severo, geolocalización automática y funciona sin conexión grâce a Service Workers y cache.',
     tech: ['React', 'TypeScript', 'PWA', 'Tailwind CSS', 'Service Workers'],
     category: 'frontend',
     github: null,
@@ -99,6 +100,7 @@ export default function Projects() {
   const { t } = useTranslation()
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
+  const { ref: sectionRef, visible } = useScrollReveal(0.1)
 
   const featured = projects.filter((p) => p.featured)
 
@@ -110,22 +112,24 @@ export default function Projects() {
   return (
     <>
       <section id="projects" className="py-28 bg-white dark:bg-black">
-        <div className="max-w-5xl mx-auto px-6">
-          {/* Header */}
+        <div
+          ref={sectionRef}
+          className={`max-w-5xl mx-auto px-6 reveal ${visible ? 'visible' : ''}`}
+        >
           <div className="max-w-2xl">
             <p className="text-xs font-semibold text-amber-700 dark:text-cyan-400 tracking-widest uppercase mb-3">Projects</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 dark:text-white tracking-tight">{t('projects.title')}</h2>
             <p className="mt-3 text-stone-500 dark:text-zinc-400">{t('projects.subtitle')}</p>
           </div>
 
-          {/* Featured grid */}
-          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {/* Featured grid with staggered reveal */}
+          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {featured.map((project) => (
               <button
                 key={project.id}
                 type="button"
                 onClick={() => handleCardClick(project)}
-                className="group flex flex-col p-6 rounded-2xl border border-stone-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] hover:bg-stone-50 dark:hover:bg-white/[0.04] hover:border-stone-300 dark:hover:border-white/[0.1] transition-all duration-300 text-left cursor-pointer"
+                className="tilt-card group flex flex-col p-6 rounded-2xl border border-stone-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] hover:bg-stone-50 dark:hover:bg-white/[0.04] hover:border-stone-300 dark:hover:border-white/[0.1] transition-all duration-300 text-left cursor-pointer"
               >
                 <div className="inline-flex self-start items-center gap-1.5 px-2.5 py-1 mb-4 rounded-md text-[11px] font-semibold text-amber-700 dark:text-cyan-400 bg-amber-50 dark:bg-cyan-400/10 border border-amber-200 dark:border-cyan-400/20 tracking-wide uppercase">
                   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
@@ -184,7 +188,6 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* Modal */}
       {modalOpen && (
         <ProjectModal
           projects={projects}

@@ -5,7 +5,7 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-stone-50 dark:bg-black">
-      {/* Ambient glow - warm amber light / cyan dark */}
+      {/* Ambient glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/[0.06] dark:bg-cyan-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-orange-400/[0.04] dark:bg-blue-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
@@ -16,9 +16,9 @@ export default function Hero() {
           <span className="text-xs font-medium text-amber-800 dark:text-cyan-300 tracking-wide uppercase">{t('hero.role')}</span>
         </div>
 
-        {/* Name */}
-        <h1 className="animate-fade-in-up delay-100 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-stone-900 dark:text-white leading-[1.1]">
-          {t('hero.name')}
+        {/* Name with animated gradient */}
+        <h1 className="animate-fade-in-up delay-100 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
+          <span className="gradient-text-animated">{t('hero.name')}</span>
         </h1>
 
         {/* Short bio */}
