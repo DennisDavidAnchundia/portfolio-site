@@ -38,6 +38,12 @@ public class Project {
     @Column(name = "demo_url", length = 255)
     private String demoUrl;
 
+    @Column(name = "long_description", columnDefinition = "TEXT")
+    private String longDescription;
+
+    @Column(nullable = false, length = 30)
+    private String category = "OTHER";
+
     @Column(nullable = false)
     private boolean featured = false;
 
@@ -99,6 +105,22 @@ public class Project {
 
     public void setDemoUrl(String demoUrl) {
         this.demoUrl = demoUrl;
+    }
+
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public boolean isFeatured() {

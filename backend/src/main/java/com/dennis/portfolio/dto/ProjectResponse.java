@@ -10,11 +10,14 @@ public record ProjectResponse(
         Long id,
         String title,
         String description,
+        String longDescription,
+        String category,
         String imageUrl,
         String githubUrl,
         String demoUrl,
         boolean featured,
         Instant createdAt,
+        List<String> tech,
         List<SkillSummary> skills
 ) {
     public record SkillSummary(

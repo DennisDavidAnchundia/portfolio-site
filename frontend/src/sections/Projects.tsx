@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { useProjects, useFeaturedProjects } from '../hooks/usePortfolio'
 import ProjectModal from '../components/ProjectModal'
+import type { Project } from '../types'
 
 interface ProjectCard {
   id: number
@@ -15,7 +17,7 @@ interface ProjectCard {
   featured: boolean
 }
 
-const projects: ProjectCard[] = [
+const fallbackProjects: ProjectCard[] = [
   {
     id: 1,
     title: 'Portfolio API',
@@ -42,69 +44,28 @@ const projects: ProjectCard[] = [
     id: 3,
     title: 'Auth Service',
     description: 'Microservicio de autenticación con JWT, roles y permisos. Integrado como módulo independiente para otras aplicaciones.',
-    longDescription: 'Servicio de autenticación y autorización desplegable de forma independiente. Soporta registro, login, refresh tokens, roles y permisos basados en atributos. Integrado como librería compartida para otros microservicios.',
+    longDescription: 'Servicio de autenticación y autorización desplegable de forma independiente. Soporta registro, login, refresh tokens, roles y permisos basados en atributos.',
     tech: ['Java', 'Spring Boot', 'Redis', 'JWT', 'Docker'],
     category: 'backend',
     github: null,
     demo: null,
     featured: true,
   },
-  {
-    id: 4,
-    title: 'Inventory Dashboard',
-    description: 'Panel de administración para gestión de inventario con reportes en tiempo real y alertas de stock bajo.',
-    longDescription: 'Dashboard interactivo con gráficas de movimiento de inventario, alertas automáticas cuando el stock cae por debajo del mínimo, exportación de reportes a PDF y CSV. Backend con procesamiento asíncrono para reportes pesados.',
-    tech: ['React', 'TypeScript', 'Chart.js', 'Node.js', 'PostgreSQL'],
-    category: 'fullstack',
-    github: null,
-    demo: null,
-    featured: false,
-  },
-  {
-    id: 5,
-    title: 'Task Manager API',
-    description: 'API para gestión de tareas con sistema de columnas tipo Kanban, asignación de usuarios y notificaciones.',
-    longDescription: 'API REST para gestión de proyectos y tareas con tableros Kanban, arrastrar y soltar, asignación de miembros, comentarios, historial de cambios y notificaciones en tiempo real vía WebSocket.',
-    tech: ['Java', 'Spring Boot', 'WebSocket', 'PostgreSQL', 'Docker'],
-    category: 'backend',
-    github: null,
-    demo: null,
-    featured: false,
-  },
-  {
-    id: 6,
-    title: 'Weather App',
-    description: 'Aplicación del clima con pronóstico a 7 días, geolocalización y modo offline con Service Workers.',
-    longDescription: 'App progressive web app que consume API del clima, muestra pronóstico diario por horas, alertas de clima severo, geolocalización automática y funciona sin conexión gracias a Service Workers y cache.',
-    tech: ['React', 'TypeScript', 'PWA', 'Tailwind CSS', 'Service Workers'],
-    category: 'frontend',
-    github: null,
-    demo: null,
-    featured: false,
-  },
-  {
-    id: 7,
-    title: 'CI/CD Pipeline',
-    description: 'Pipelines automatizados para build, test y deploy de microservicios con GitHub Actions y Docker.',
-    longDescription: 'Configuración completa de CI/CD: build multi-stage, tests automatizados, análisis de código, build de imágenes Docker, push a GHCR y deploy automático a Kubernetes. Incluye secrets management y notificaciones.',
-    tech: ['GitHub Actions', 'Docker', 'Kubernetes', 'Bash', 'YAML'],
-    category: 'devops',
-    github: null,
-    demo: null,
-    featured: false,
-  },
-  {
-    id: 8,
-    title: 'Blog Engine',
-    description: 'Motor de blog con editor Markdown, sistema de tags, búsqueda full-text y rendering del lado del servidor.',
-    longDescription: 'CMS ligero para blogs técnicos. Editor con preview en vivo, soporte para código con syntax highlighting, sistema de tags y categorías, búsqueda full-text con PostgreSQL tsvector, SSR para SEO.',
-    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Tailwind CSS', 'MDX'],
-    category: 'fullstack',
-    github: null,
-    demo: null,
-    featured: false,
-  },
-] as ProjectCard[]
+]
+
+function mapApiToCard(p: Project): ProjectCard {
+  return {
+    id: p.id,
+    title: p.title,
+    description: p.description,
+    longDescription: p.longDescription || p.description,
+    tech: p.tech || p.skills?.map((s) => s.name) || [],
+    category: (p.category || 'other').toLowerCase(),
+    github: p.githubUrl,
+    demo: p.demoUrl,
+    featured: p.featured,
+  }
+}
 
 const allCategories = ['all', 'backend', 'frontend', 'fullstack', 'devops']
 
@@ -114,7 +75,22 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<ProjectCard | null>(null)
   const { ref: sectionRef, visible } = useScrollReveal(0.1)
 
-  const featured = projects.filter((p) => p.featured)
+  const { data: apiProjects } = useProjects()
+  const { data: apiFeatured } = useFeaturedProjects()
+
+  const projects = useMemo(() => {
+    if (apiProjects && apiProjects.length > 0) {
+      return apiProjects.map(mapApiToCard)
+    }
+    return fallbackProjects
+  }, [apiProjects])
+
+  const featured = useMemo(() => {
+    if (apiFeatured && apiFeatured.length > 0) {
+      return apiFeatured.map(mapApiToCard)
+    }
+    return projects.filter((p) => p.featured)
+  }, [apiFeatured, projects])
 
   const handleCardClick = (project: ProjectCard) => {
     setSelectedProject(project)

@@ -42,20 +42,18 @@ public class DataSeeder implements ApplicationRunner {
 
         Project techstore = new Project();
         techstore.setTitle("TechStore API");
-        techstore.setDescription(
-                "API REST de e-commerce con carrito de compras, autenticación JWT y pagos. "
-              + "Arquitectura limpia con capas controller → service → repository. "
-              + "PostgreSQL, Redis para caché de sesiones, Flyway para migraciones.");
+        techstore.setDescription("Plataforma de e-commerce con catálogo de productos, carrito de compras, pasarela de pagos y panel de administración.");
+        techstore.setLongDescription("E-commerce completo con catálogo paginado, filtros por categoría, carrito de compras persistente, integración con pasarela de pagos, panel de administración para gestión de productos y pedidos. Arquitectura de microservicios con comunicación asíncrona.");
+        techstore.setCategory("fullstack");
         techstore.setGithubUrl("https://github.com/DennisDavidAnchundia/techstore-api");
         techstore.setFeatured(true);
         techstore.setSkills(Set.of(java, spring, postgres, redis, docker, jpa, flyway));
 
         Project portfolioApi = new Project();
         portfolioApi.setTitle("Portfolio API");
-        portfolioApi.setDescription(
-                "Backend del portafolio personal: API REST con Spring Boot 4, PostgreSQL, "
-              + "Redis, Flyway, Docker multi-stage y despliegue en Kubernetes. "
-              + "CI/CD con GitHub Actions.");
+        portfolioApi.setDescription("API RESTful completa para portafolio personal con autenticación, CRUD de proyectos, sistema de contacto y despliegue automatizado.");
+        portfolioApi.setLongDescription("Backend completo para un portafolio personal. Incluye autenticación JWT, endpoints RESTful para proyectos y habilidades, formulario de contacto con envío de email, migraciones con Flyway, tests unitarios e integración con Testcontainers. Desplegado con Docker multi-stage.");
+        portfolioApi.setCategory("backend");
         portfolioApi.setGithubUrl("https://github.com/DennisDavidAnchundia/portfolio-site");
         portfolioApi.setFeatured(true);
         portfolioApi.setSkills(Set.of(java, spring, postgres, redis, docker, k8s, jpa, maven));

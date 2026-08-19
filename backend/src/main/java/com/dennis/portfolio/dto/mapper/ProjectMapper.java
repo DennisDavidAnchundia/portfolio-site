@@ -3,8 +3,6 @@ package com.dennis.portfolio.dto.mapper;
 import com.dennis.portfolio.dto.ProjectResponse;
 import com.dennis.portfolio.model.Project;
 
-import java.util.ArrayList;
-
 public final class ProjectMapper {
 
     private ProjectMapper() {
@@ -20,15 +18,22 @@ public final class ProjectMapper {
                 ))
                 .toList();
 
+        var tech = project.getSkills().stream()
+                .map(s -> s.getName())
+                .toList();
+
         return new ProjectResponse(
                 project.getId(),
                 project.getTitle(),
                 project.getDescription(),
+                project.getLongDescription(),
+                project.getCategory(),
                 project.getImageUrl(),
                 project.getGithubUrl(),
                 project.getDemoUrl(),
                 project.isFeatured(),
                 project.getCreatedAt(),
+                tech,
                 skills
         );
     }

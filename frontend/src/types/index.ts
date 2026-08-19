@@ -9,11 +9,14 @@ export interface Project {
   id: number
   title: string
   description: string
+  longDescription: string | null
+  category: string
   imageUrl: string | null
   githubUrl: string | null
   demoUrl: string | null
   featured: boolean
   createdAt: string
+  tech: string[]
   skills: SkillSummary[]
 }
 

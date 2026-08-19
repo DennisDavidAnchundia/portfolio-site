@@ -31,3 +31,9 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+
+app:
+  admin:
+    key: ${ADMIN_KEY:changeme}
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173}
