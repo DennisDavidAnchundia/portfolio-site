@@ -3,7 +3,19 @@ import { useTranslation } from 'react-i18next'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import ProjectModal from '../components/ProjectModal'
 
-const projects = [
+interface ProjectCard {
+  id: number
+  title: string
+  description: string
+  longDescription: string
+  tech: string[]
+  category: string
+  github: string | null
+  demo: string | null
+  featured: boolean
+}
+
+const projects: ProjectCard[] = [
   {
     id: 1,
     title: 'Portfolio API',
@@ -63,7 +75,7 @@ const projects = [
     id: 6,
     title: 'Weather App',
     description: 'Aplicación del clima con pronóstico a 7 días, geolocalización y modo offline con Service Workers.',
-    longDescription: 'App progressive web app que consume API del clima, muestra pronóstico diario por horas, alertas de clima severo, geolocalización automática y funciona sin conexión grâce a Service Workers y cache.',
+    longDescription: 'App progressive web app que consume API del clima, muestra pronóstico diario por horas, alertas de clima severo, geolocalización automática y funciona sin conexión gracias a Service Workers y cache.',
     tech: ['React', 'TypeScript', 'PWA', 'Tailwind CSS', 'Service Workers'],
     category: 'frontend',
     github: null,
@@ -92,19 +104,19 @@ const projects = [
     demo: null,
     featured: false,
   },
-]
+] as ProjectCard[]
 
 const allCategories = ['all', 'backend', 'frontend', 'fullstack', 'devops']
 
 export default function Projects() {
   const { t } = useTranslation()
   const [modalOpen, setModalOpen] = useState(false)
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
+  const [selectedProject, setSelectedProject] = useState<ProjectCard | null>(null)
   const { ref: sectionRef, visible } = useScrollReveal(0.1)
 
   const featured = projects.filter((p) => p.featured)
 
-  const handleCardClick = (project: typeof projects[0]) => {
+  const handleCardClick = (project: ProjectCard) => {
     setSelectedProject(project)
     setModalOpen(true)
   }
@@ -129,7 +141,7 @@ export default function Projects() {
                 key={project.id}
                 type="button"
                 onClick={() => handleCardClick(project)}
-                className="tilt-card group flex flex-col p-6 rounded-2xl border border-stone-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] hover:bg-stone-50 dark:hover:bg-white/[0.04] hover:border-stone-300 dark:hover:border-white/[0.1] transition-all duration-300 text-left cursor-pointer"
+                className="tilt-card shimmer group flex flex-col p-6 rounded-2xl border border-stone-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] hover:bg-stone-50 dark:hover:bg-white/[0.04] hover:border-stone-300 dark:hover:border-white/[0.1] transition-all duration-300 text-left cursor-pointer"
               >
                 <div className="inline-flex self-start items-center gap-1.5 px-2.5 py-1 mb-4 rounded-md text-[11px] font-semibold text-amber-700 dark:text-cyan-400 bg-amber-50 dark:bg-cyan-400/10 border border-amber-200 dark:border-cyan-400/20 tracking-wide uppercase">
                   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
@@ -193,7 +205,6 @@ export default function Projects() {
           projects={projects}
           categories={allCategories}
           onClose={() => { setModalOpen(false); setSelectedProject(null) }}
-          onSelect={handleCardClick}
           initialProject={selectedProject}
         />
       )}

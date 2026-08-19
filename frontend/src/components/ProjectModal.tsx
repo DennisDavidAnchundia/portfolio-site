@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 interface Project {
@@ -17,7 +17,6 @@ interface ProjectModalProps {
   projects: Project[]
   categories: string[]
   onClose: () => void
-  onSelect: (project: Project) => void
   initialProject: Project | null
 }
 
@@ -29,15 +28,30 @@ const categoryLabels: Record<string, string> = {
   devops: 'DevOps',
 }
 
-export default function ProjectModal({ projects, categories, onClose, onSelect, initialProject }: ProjectModalProps) {
+export default function ProjectModal({ projects, categories, onClose, initialProject }: ProjectModalProps) {
   const { t } = useTranslation()
   const [activeCategory, setActiveCategory] = useState('all')
   const [detail, setDetail] = useState<Project | null>(initialProject)
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
+    requestAnimationFrame(() => setIsOpen(true))
     return () => { document.body.style.overflow = '' }
   }, [])
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false)
+    setTimeout(onClose, 300)
+  }, [onClose])
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose()
+    }
+    document.addEventListener('keydown', handleEsc)
+    return () => document.removeEventListener('keydown', handleEsc)
+  }, [handleClose])
 
   const filtered = activeCategory === 'all'
     ? projects
@@ -47,18 +61,18 @@ export default function ProjectModal({ projects, categories, onClose, onSelect, 
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-fade-in"
-        onClick={onClose}
+        className={`absolute inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm modal-backdrop ${isOpen ? 'open' : ''}`}
+        onClick={handleClose}
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-4xl max-h-[85vh] bg-white dark:bg-zinc-900 rounded-2xl border border-stone-200 dark:border-white/[0.08] shadow-2xl overflow-hidden animate-fade-in-up">
+      <div className={`relative w-full max-w-4xl max-h-[85vh] bg-white dark:bg-zinc-900 rounded-2xl border border-stone-200 dark:border-white/[0.08] shadow-2xl overflow-hidden modal-panel ${isOpen ? 'open' : ''}`}>
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-stone-200 dark:border-white/[0.06]">
           <h3 className="text-lg font-semibold text-stone-900 dark:text-white">{t('projects.all_projects')}</h3>
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             className="p-2 text-stone-400 hover:text-stone-900 dark:hover:text-white rounded-lg hover:bg-stone-100 dark:hover:bg-white/[0.05] transition-colors"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

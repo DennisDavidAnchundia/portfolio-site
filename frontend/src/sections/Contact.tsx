@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSendMessage } from '../hooks/usePortfolio'
 import { useScrollReveal } from '../hooks/useScrollReveal'
@@ -8,6 +8,22 @@ export default function Contact() {
   const sendMessage = useSendMessage()
   const [form, setForm] = useState({ name: '', email: '', content: '' })
   const { ref: sectionRef, visible } = useScrollReveal(0.1)
+  const orbContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = orbContainerRef.current
+    if (!container) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        container.querySelectorAll('.orb').forEach((orb) => {
+          (orb as HTMLElement).style.animationPlayState = entry.isIntersecting ? 'running' : 'paused'
+        })
+      },
+      { threshold: 0 }
+    )
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -19,7 +35,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-28 bg-stone-100 dark:bg-zinc-950 overflow-hidden">
       {/* Animated background orbs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div ref={orbContainerRef} className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="orb orb-1" />
         <div className="orb orb-2" />
         <div className="orb orb-3" />
@@ -97,7 +113,7 @@ export default function Contact() {
                 href={item.href}
                 target={item.href.startsWith('http') ? '_blank' : undefined}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="group flex items-center gap-4 p-4 rounded-xl border border-stone-200 dark:border-white/[0.06] bg-white/70 dark:bg-white/[0.02] hover:bg-white dark:hover:bg-white/[0.04] hover:border-stone-300 dark:hover:border-white/[0.1] transition-all duration-300"
+                className="contact-card-glow group flex items-center gap-4 p-4 rounded-xl border border-stone-200 dark:border-white/[0.06] bg-white/70 dark:bg-white/[0.02] hover:bg-white dark:hover:bg-white/[0.04] hover:border-stone-300 dark:hover:border-white/[0.1]"
               >
                 <div className="flex-shrink-0 p-2.5 rounded-lg bg-amber-50 dark:bg-cyan-400/10 text-amber-700 dark:text-cyan-400 group-hover:scale-110 transition-transform duration-300">
                   {item.icon}
@@ -208,102 +224,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-
-      <style>{`
-        .orb {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(80px);
-          will-change: transform;
-        }
-        .orb-1 {
-          width: 400px; height: 400px;
-          background: rgba(180, 83, 9, 0.06);
-          top: 10%; left: -5%;
-          animation: float-1 20s ease-in-out infinite;
-        }
-        .orb-2 {
-          width: 300px; height: 300px;
-          background: rgba(180, 83, 9, 0.04);
-          bottom: 10%; right: 10%;
-          animation: float-2 25s ease-in-out infinite;
-        }
-        .orb-3 {
-          width: 200px; height: 200px;
-          background: rgba(146, 64, 14, 0.05);
-          top: 50%; left: 40%;
-          animation: float-3 18s ease-in-out infinite;
-        }
-        :global(.dark) .orb-1 { background: rgba(34, 211, 238, 0.04); }
-        :global(.dark) .orb-2 { background: rgba(59, 130, 246, 0.03); }
-        :global(.dark) .orb-3 { background: rgba(168, 85, 247, 0.03); }
-
-        @keyframes float-1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -40px) scale(1.05); }
-          66% { transform: translate(-20px, 20px) scale(0.95); }
-        }
-        @keyframes float-2 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(-40px, 30px) scale(1.1); }
-          66% { transform: translate(25px, -15px) scale(0.9); }
-        }
-        @keyframes float-3 {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(20px, -30px); }
-        }
-
-        .form-card-wrapper {
-          position: relative;
-          border-radius: 1rem;
-          padding: 1px;
-          background: linear-gradient(135deg, rgba(180, 83, 9, 0.2), rgba(146, 64, 14, 0.05), rgba(180, 83, 9, 0.2));
-          background-size: 200% 200%;
-          animation: border-shift 6s ease-in-out infinite;
-        }
-        :global(.dark) .form-card-wrapper {
-          background: linear-gradient(135deg, rgba(34, 211, 238, 0.15), rgba(59, 130, 246, 0.05), rgba(168, 85, 247, 0.1), rgba(34, 211, 238, 0.15));
-          background-size: 300% 300%;
-          animation: border-shift-dark 8s ease-in-out infinite;
-        }
-        @keyframes border-shift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        @keyframes border-shift-dark {
-          0%, 100% { background-position: 0% 50%; }
-          33% { background-position: 100% 0%; }
-          66% { background-position: 50% 100%; }
-        }
-
-        .submit-btn {
-          position: relative;
-          overflow: hidden;
-        }
-        .submit-btn::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          opacity: 0;
-          transition: opacity 0.3s;
-        }
-        .submit-btn:not(:disabled):hover::before { opacity: 1; }
-        .submit-btn:not(:disabled) {
-          box-shadow: 0 0 0 0 rgba(180, 83, 9, 0);
-          transition: all 0.3s;
-        }
-        .submit-btn:not(:disabled):hover {
-          box-shadow: 0 0 30px rgba(180, 83, 9, 0.25), 0 4px 12px rgba(180, 83, 9, 0.15);
-          transform: translateY(-1px);
-        }
-        :global(.dark) .submit-btn:not(:disabled) {
-          box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
-        }
-        :global(.dark) .submit-btn:not(:disabled):hover {
-          box-shadow: 0 0 30px rgba(34, 211, 238, 0.25), 0 4px 12px rgba(34, 211, 238, 0.15);
-        }
-      `}</style>
     </section>
   )
 }

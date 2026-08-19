@@ -5,18 +5,26 @@ import { useScrollReveal } from '../hooks/useScrollReveal'
 const categories = [
   {
     key: 'languages',
+    color: 'bg-amber-500',
+    darkColor: 'bg-cyan-400',
     skills: ['Java', 'TypeScript', 'JavaScript', 'SQL', 'Python', 'HTML/CSS'],
   },
   {
     key: 'frameworks',
+    color: 'bg-orange-500',
+    darkColor: 'bg-blue-400',
     skills: ['Spring Boot', 'Hibernate', 'React', 'Node.js', 'Express', 'Tailwind CSS'],
   },
   {
     key: 'databases',
+    color: 'bg-yellow-600',
+    darkColor: 'bg-purple-400',
     skills: ['PostgreSQL', 'MySQL', 'Redis', 'H2', 'Flyway'],
   },
   {
     key: 'devops',
+    color: 'bg-stone-500',
+    darkColor: 'bg-emerald-400',
     skills: ['Docker', 'Git', 'GitHub Actions', 'Linux', 'Kubernetes', 'Maven', 'REST APIs'],
   },
 ]
@@ -61,8 +69,9 @@ export default function Skills() {
           {categories[active].skills.map((skill) => (
             <span
               key={skill}
-              className="tilt-card px-4 py-2 text-sm font-medium text-stone-700 dark:text-zinc-200 bg-white dark:bg-white/[0.06] border border-stone-200 dark:border-white/[0.08] rounded-lg hover:border-amber-300 dark:hover:border-cyan-400/30 hover:bg-amber-50/50 dark:hover:bg-white/[0.08] transition-all duration-200 cursor-default"
+              className="tilt-card inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-stone-700 dark:text-zinc-200 bg-white dark:bg-white/[0.06] border border-stone-200 dark:border-white/[0.08] rounded-lg hover:border-amber-300 dark:hover:border-cyan-400/30 hover:bg-amber-50/50 dark:hover:bg-white/[0.08] transition-all duration-200 cursor-default"
             >
+              <span className={`w-1.5 h-1.5 rounded-full ${categories[active].color} ${categories[active].darkColor}`} />
               {skill}
             </span>
           ))}

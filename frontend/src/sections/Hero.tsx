@@ -1,10 +1,53 @@
+import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+
+function HeroParticles() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const els: HTMLDivElement[] = []
+    for (let i = 0; i < 12; i++) {
+      const el = document.createElement('div')
+      el.className = 'hero-particle'
+      const size = Math.random() * 3 + 1
+      el.style.width = size + 'px'
+      el.style.height = size + 'px'
+      el.style.left = Math.random() * 100 + '%'
+      el.style.bottom = -(Math.random() * 20) + '%'
+      el.style.background = document.documentElement.classList.contains('dark')
+        ? 'rgba(34,211,238,' + (Math.random() * 0.3 + 0.1) + ')'
+        : 'rgba(180,83,9,' + (Math.random() * 0.2 + 0.05) + ')'
+      el.style.animationDuration = (Math.random() * 15 + 15) + 's'
+      el.style.animationDelay = (Math.random() * 10) + 's'
+      container.appendChild(el)
+      els.push(el)
+    }
+
+    const obs = new MutationObserver(() => {
+      const dark = document.documentElement.classList.contains('dark')
+      els.forEach((el) => {
+        el.style.background = dark
+          ? 'rgba(34,211,238,' + (Math.random() * 0.3 + 0.1) + ')'
+          : 'rgba(180,83,9,' + (Math.random() * 0.2 + 0.05) + ')'
+      })
+    })
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+
+    return () => { obs.disconnect(); els.forEach((e) => e.remove()) }
+  }, [])
+
+  return <div ref={containerRef} className="absolute inset-0 pointer-events-none overflow-hidden" />
+}
 
 export default function Hero() {
   const { t } = useTranslation()
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-stone-50 dark:bg-black">
+      <HeroParticles />
       {/* Ambient glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/[0.06] dark:bg-cyan-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-orange-400/[0.04] dark:bg-blue-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
